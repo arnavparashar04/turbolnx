@@ -1,8 +1,12 @@
-#include <iostream>
 #include "turbolnx/memory.h"
+#include "turbolnx/ui.h"
+#include <thread>
+#include <chrono>
 
 int main(int argc, char *argv[]){
-    auto memory = turbolnx::getMemoryStatistics();
-    std::cout << "Total: "<< memory.totalMemory << ' '<< memory.memTotalFormat << '\n';
-    std::cout << "Used: "<< memory.memoryUsed << ' '<< memory.memUsedFormat << '\n';
+    while(1){
+        auto memory = turbolnx::getMemoryStatistics();
+        turbolnx::drawoutput(memory); 
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }

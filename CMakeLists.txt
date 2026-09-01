@@ -30,3 +30,6 @@ target_link_libraries(turbolnx
         nvidia-ml
 )
 
+install(TARGETS turbolnx
+    RUNTIME DESTINATION bin
+)
