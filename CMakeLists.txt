@@ -23,6 +23,7 @@ add_executable(turbolnx
 target_include_directories(turbolnx
     PRIVATE
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/third_party
 )
 
 target_link_libraries(turbolnx

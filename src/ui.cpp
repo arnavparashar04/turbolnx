@@ -4,8 +4,9 @@
 #include "turbolnx/ui.h"
 #include "turbolnx/cpu.h"
 #include "turbolnx/memory.h"
+#include "turbolnx/nvidia.h"
 
-void turbolnx::drawoutput(turbolnx::MemoryStatistics memory, turbolnx::CpuStats cpu){
+void turbolnx::drawoutput(turbolnx::MemoryStatistics memory, turbolnx::CpuStats cpu, turbolnx::nvidiaStats gpu){
     std::cout << "\033[2J\033[H";
     const std::string RED    = "\033[38;2;224;108;117m";
     const std::string GREEN  = "\033[38;2;152;195;121m";
@@ -22,7 +23,14 @@ void turbolnx::drawoutput(turbolnx::MemoryStatistics memory, turbolnx::CpuStats 
     std::cout<<"Swap: "<<memory.swapUsed<< " "<<memory.swapUsedFormat;
     std::cout<<" / "<<memory.swapTotal<< " "<<memory.swapTotalFormat<<std::endl<<std::endl;
     
-    std::cout<<GREEN<<"CPU\n\n"<<RESET;
-    std::cout<<"CPU Usage: "<<cpu.usagePercentage<<"%"<<std::endl;
+    std::cout<<BLUE<<"CPU\n\n"<<RESET;
+    std::cout<<"CPU Usage: "<<cpu.usagePercentage<<"%"<<std::endl<<std::endl;
+
+    std::cout<<GREEN<<"GPU\n\n"<<RESET;
+    std::cout<<gpu.name<<"\n";
+    std::cout<<"Usage: "<<gpu.usage<<"%\n";
+    std::cout<<"VRAM: "<<gpu.vramUsed<<"/"<<gpu.vramTotal<<std::endl;
+    std::cout<<"Temperature: "<<gpu.temp<<"°C\n";
+    std::cout<<"Power: "<<gpu.power<< "W\n";
     std::cout.flush();
 }
