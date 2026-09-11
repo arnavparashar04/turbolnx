@@ -2,6 +2,31 @@
 #include <nvml.h>
 
 namespace turbolnx {
+
+    struct formattedValue1{
+        double value;
+        std::string format;
+    };
+
+    formattedValue1 formatMemOut1(uint64_t inputval){
+       if (inputval<1024ULL) {
+           return formattedValue1{.value = static_cast<double>(inputval),.format = "B"};
+       }
+       else if (inputval < 1024ULL*1024) {
+           return formattedValue1{.value = static_cast<double>(inputval/1024.0),.format = "KiB"}; 
+       }
+       else if (inputval < 1024ULL*1024*1024) {
+           return formattedValue1{.value = static_cast<double>(inputval/(1024.0*1024.0)),.format = "MiB"};
+       }
+       else if(inputval<1024ULL*1024*1024*1024){
+           return formattedValue1{.value = static_cast<double>(inputval)/(1024.0*1024.0*1024.0),.format = "GiB"};
+       }
+       else {
+            return formattedValue1{.value = static_cast<double>(inputval)/(1024.0*1024.0*1024.0*1024.0),.format = "TiB"};
+       }
+    }
+    
+
     nvidiaStats getNvidiaStats(){
         
        
@@ -25,8 +50,12 @@ namespace turbolnx {
 
         nvmlMemory_t memory;
         nvmlDeviceGetMemoryInfo(device, &memory);
-        stats.vramTotal = memory.total;
-        stats.vramUsed = memory.used;
+        auto formatVTotal = formatMemOut1(memory.total);
+        stats.vramTotal = formatVTotal.value;
+        stats.vramTotalFormat = formatVTotal.format;
+        auto formatVUsed = formatMemOut1(memory.used);
+        stats.vramUsed = formatVUsed.value;
+        stats.vramUsedFormat = formatVUsed.format;
 
         unsigned int power;
         nvmlDeviceGetPowerUsage(device, &power);

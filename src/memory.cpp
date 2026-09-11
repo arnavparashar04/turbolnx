@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-namespace {
+namespace turbolnx{
     struct formattedValue{
         double value;
         std::string format;
@@ -40,38 +40,39 @@ turbolnx::MemoryStatistics turbolnx::getMemoryStatistics(){
     while(memoryinfo>>name>>value>>formatThrowAway){
         if(name == "MemTotal:"){
             totalMemory = value;
-            auto format = formatMemOut(value);
+            auto format = turbolnx::formatMemOut(value);
             memstats.totalMemory = format.value;
             memstats.memTotalFormat = format.format;
         }
         else if(name == "MemAvailable:"){
             availableMemory = value;
-            auto format = formatMemOut(value);
+            auto format = turbolnx::formatMemOut(value);
             memstats.memoryAvailaible = format.value;
             memstats.memAvailFormat = format.format;
         }
         else if (name == "Cached:") {
-            auto format = formatMemOut(value);
+            auto format = turbolnx::formatMemOut(value);
             memstats.memoryCached = format.value;
             memstats.memCachedFormat = format.format;
+
         }
         else if (name == "SwapTotal:") {
             swapTotal = value;
-            auto format = formatMemOut(value);
+            auto format = turbolnx::formatMemOut(value);
             memstats.swapTotal = format.value;
             memstats.swapTotalFormat = format.format;
         }
         else if (name == "SwapFree:") {
             swapFree = value;
-            auto format = formatMemOut(value);
+            auto format = turbolnx::formatMemOut(value);
             memstats.swapFree = format.value;
             memstats.swapFreeFormat = format.format;
         }
     }
     memUsed = totalMemory - availableMemory;
     swapUsed = swapTotal - swapFree;
-    auto muformat = formatMemOut(memUsed);
-    auto suformat = formatMemOut(swapUsed);
+    auto muformat = turbolnx::formatMemOut(memUsed);
+    auto suformat = turbolnx::formatMemOut(swapUsed);
     memstats.memoryUsed = muformat.value;
     memstats.memUsedFormat = muformat.format;
     memstats.swapUsed = suformat.value;

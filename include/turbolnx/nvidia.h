@@ -11,6 +11,8 @@ namespace turbolnx {
        uint64_t vramUsed;
        uint64_t vramTotal;
        std::string name;
+       std::string vramUsedFormat;
+       std::string vramTotalFormat;
    };
 
    nvidiaStats getNvidiaStats();
