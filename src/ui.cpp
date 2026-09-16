@@ -29,7 +29,7 @@ void turbolnx::drawoutput(turbolnx::MemoryStatistics memory, turbolnx::CpuStats 
     std::cout<<GREEN<<"GPU\n\n"<<RESET;
     std::cout<<gpu.name<<"\n";
     std::cout<<"Usage: "<<gpu.usage<<"%\n";
-    std::cout<<"VRAM: "<<gpu.vramUsed<<gpu.vramUsedFormat<<"/"<<gpu.vramTotal<<gpu.vramTotalFormat<<std::endl;
+    std::cout<<"VRAM: "<<gpu.vramUsed<<" "<<gpu.vramUsedFormat<<" / "<<gpu.vramTotal<<" "<<gpu.vramTotalFormat<<std::endl;
     std::cout<<"Temperature: "<<gpu.temp<<"°C\n";
     std::cout<<"Power: "<<gpu.power<< "W\n";
     std::cout.flush();

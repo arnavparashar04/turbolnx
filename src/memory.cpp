@@ -10,7 +10,10 @@ namespace turbolnx{
     };
 
     formattedValue formatMemOut(uint64_t inputval){
-       if (inputval<1024ULL) {
+        if(inputval<=0ULL){
+            return formattedValue{.value = static_cast<double>(inputval*1024.0), .format = "B"};
+        }
+        else if (inputval<1024ULL) {
            return formattedValue{.value = static_cast<double>(inputval),.format = "KiB"};
        }
        else if (inputval < 1024ULL*1024) {
@@ -76,6 +79,6 @@ turbolnx::MemoryStatistics turbolnx::getMemoryStatistics(){
     memstats.memoryUsed = muformat.value;
     memstats.memUsedFormat = muformat.format;
     memstats.swapUsed = suformat.value;
-    memstats.swapUsedFormat = suformat.value;
+    memstats.swapUsedFormat = suformat.format;
     return memstats;
 }
