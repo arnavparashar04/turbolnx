@@ -2,12 +2,14 @@
 #include <fstream>
 #include <string>
 #include <cstdint>
+#include <filesystem>
 namespace turbolnx {
     
     void initcpustats(CpuStats *cpustats){
        cpustats->idle = 0;
        cpustats->total = 0;
        cpustats->usagePercentage = 0;
+       cpustats->temp = 0;
     }
     void getCpuStats(CpuStats *prevcpustats){
         std::ifstream cpuinfo("/proc/stat");
@@ -31,6 +33,12 @@ namespace turbolnx {
             prevcpustats->idle = idlesuper;
             prevcpustats->total = total;
         }
+
+        std::ifstream cpuTemp("/sys/class/thermal/thermal_zone0/temp");
+        uint64_t temporary_temperature = 0;
+        cpuTemp>>temporary_temperature;
+        temporary_temperature = temporary_temperature/1000;
+        prevcpustats->temp =temporary_temperature;
     }
 }
 
