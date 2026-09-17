@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cstdint>
-#include <filesystem>
+#include <sys/types.h>
 namespace turbolnx {
     
     void initcpustats(CpuStats *cpustats){
@@ -10,8 +10,13 @@ namespace turbolnx {
        cpustats->total = 0;
        cpustats->usagePercentage = 0;
        cpustats->temp = 0;
+       cpustats->uptimeSeconds = 0;
+       cpustats->uptimeMinutes = 0;
+       cpustats->uptimeHours = 0;
     }
     void getCpuStats(CpuStats *prevcpustats){
+
+        //gen cpu stats
         std::ifstream cpuinfo("/proc/stat");
         std::string cpunamethrowaway;
         cpuinfo>>cpunamethrowaway;
@@ -33,12 +38,21 @@ namespace turbolnx {
             prevcpustats->idle = idlesuper;
             prevcpustats->total = total;
         }
-
+        //temp here onwards
         std::ifstream cpuTemp("/sys/class/thermal/thermal_zone0/temp");
         uint64_t temporary_temperature = 0;
         cpuTemp>>temporary_temperature;
         temporary_temperature = temporary_temperature/1000;
         prevcpustats->temp =temporary_temperature;
+        //uptime stuff here onwards
+        std::ifstream uptime("/proc/uptime");
+        uint64_t totalUptimeS = 0;
+        uptime>>totalUptimeS;
+        prevcpustats->uptimeHours = totalUptimeS/3600;
+        prevcpustats->uptimeMinutes = (totalUptimeS%3600) / 60;
+        prevcpustats->uptimeSeconds = totalUptimeS &60;
+
+
     }
 }
 

@@ -25,7 +25,8 @@ void turbolnx::drawoutput(turbolnx::MemoryStatistics memory, turbolnx::CpuStats 
     
     std::cout<<BLUE<<"CPU\n\n"<<RESET;
     std::cout<<"CPU Usage: "<<cpu.usagePercentage<<"%"<<std::endl;
-    std::cout<<"CPU Temperature: "<<cpu.temp<<"°C\n\n";
+    std::cout<<"CPU Temperature: "<<cpu.temp<<"°C\n";
+    std::cout<<"Uptime: "<<cpu.uptimeHours<<" H "<<cpu.uptimeMinutes<<" M\n\n";
     
     std::cout<<GREEN<<"GPU\n\n"<<RESET;
     std::cout<<gpu.name<<"\n";
